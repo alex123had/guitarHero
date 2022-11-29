@@ -1,8 +1,13 @@
 public class RingBuffer {
+<<<<<<< HEAD
 	double[] buffer;
 	
 	int first;
 	int last;
+=======
+	
+	
+>>>>>>> b56b43c5ebdbbe022bf30ac4b224b9915457daa4
 	
 	public RingBuffer(int capacity) {
 		buffer = new double[capacity];
@@ -10,13 +15,21 @@ public class RingBuffer {
 	
 	public int size() {
 		int count = 0;
+<<<<<<< HEAD
 		for (int i = first; i<last; i++) {
 			
 		}
+=======
+		buffer = new RingBuffer[10];
+		for(int i = 0; i < buffer.length; i++) {
+			count++;
+		}
+		return count;
+>>>>>>> b56b43c5ebdbbe022bf30ac4b224b9915457daa4
 	}
 	
 	public boolean isEmpty() {
-		return false;
+		
 	}
 	
 	public boolean isFull() {
