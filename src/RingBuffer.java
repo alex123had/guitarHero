@@ -1,11 +1,18 @@
-
 public class RingBuffer {
+	double[] buffer;
+	
+	int first;
+	int last;
+	
 	public RingBuffer(int capacity) {
-		
+		buffer = new double[capacity];
 	}
 	
 	public int size() {
-		return 0;
+		int count = 0;
+		for (int i = first; i<last; i++) {
+			
+		}
 	}
 	
 	public boolean isEmpty() {
@@ -17,7 +24,9 @@ public class RingBuffer {
 	}
 	
 	public void enqueue(double x) {
-		
+		if (!isFull()) {
+			
+		}
 	}
 	
 	public double dequeue() {
