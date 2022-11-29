@@ -1,15 +1,23 @@
 
 public class RingBuffer {
+	
+	
+	
 	public RingBuffer(int capacity) {
 		
 	}
 	
 	public int size() {
-		return 0;
+		int count = 0;
+		buffer = new RingBuffer[10];
+		for(int i = 0; i < buffer.length; i++) {
+			count++;
+		}
+		return count;
 	}
 	
 	public boolean isEmpty() {
-		return false;
+		
 	}
 	
 	public boolean isFull() {
