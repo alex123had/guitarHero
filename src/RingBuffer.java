@@ -1,56 +1,77 @@
+import java.util.NoSuchElementException;
+
 public class RingBuffer {
-<<<<<<< HEAD
 	double[] buffer;
-	
-	int first;
-	int last;
-=======
-	
-	
->>>>>>> b56b43c5ebdbbe022bf30ac4b224b9915457daa4
+	int size = 0;
+	int first = 0;
+	int last = 0;
 	
 	public RingBuffer(int capacity) {
 		buffer = new double[capacity];
 	}
 	
 	public int size() {
-		int count = 0;
-<<<<<<< HEAD
-		for (int i = first; i<last; i++) {
-			
-		}
-=======
-		buffer = new RingBuffer[10];
-		for(int i = 0; i < buffer.length; i++) {
-			count++;
-		}
-		return count;
->>>>>>> b56b43c5ebdbbe022bf30ac4b224b9915457daa4
+		return size;
 	}
 	
 	public boolean isEmpty() {
-		
+		return size == 0; 
 	}
 	
 	public boolean isFull() {
-		return false;
+		return size == buffer.length;
 	}
 	
 	public void enqueue(double x) {
-		if (!isFull()) {
-			
+		if (isFull()) {
+			throw new IllegalStateException();
 		}
+		
+		buffer[last]= x;
+		
+		if (last == buffer.length-1) {
+			last = 0;
+		}
+		else {
+			last++;
+		}
+		
+		size++;		
 	}
 	
 	public double dequeue() {
-		return 0.0;
+		if (isEmpty()) {
+			throw new NoSuchElementException();
+		}
+		
+		double temp = buffer[first];
+		first++;
+		
+		size--;
+		
+		if (first>= buffer.length) {
+			first = 0;
+		}
+		
+		return temp;
 	}
 	
 	public double peek() {
-		return 0.0;
+		if (isEmpty()) {
+			throw new NoSuchElementException();
+		}
+		
+		return buffer[first];
 	}
 	
 	public String toString() {
-		return null;
+		String temp = "[";
+		for (int i = 0; i<buffer.length; i++) {
+			temp = temp + buffer[i] + ",";
+		}
+		temp = buffer[last] + "]";
+		
+		return temp;
 	}
 }
+
