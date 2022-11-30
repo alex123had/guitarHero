@@ -3,11 +3,13 @@ import java.util.NoSuchElementException;
 public class RingBuffer {
 	double[] buffer;
 	int size = 0;
-	int first = 0;
-	int last = 0;
+	int first;
+	int last;
 	
 	public RingBuffer(int capacity) {
 		buffer = new double[capacity];
+		first = 0; 
+		last = 0;
 	}
 	
 	public int size() {
@@ -23,17 +25,16 @@ public class RingBuffer {
 	}
 	
 	public void enqueue(double x) {
+		
 		if (isFull()) {
 			throw new IllegalStateException();
 		}
 		
 		buffer[last]= x;
+		last++;
 		
-		if (last == buffer.length-1) {
+		if (last >= buffer.length-1) {
 			last = 0;
-		}
-		else {
-			last++;
 		}
 		
 		size++;		
@@ -60,17 +61,17 @@ public class RingBuffer {
 		if (isEmpty()) {
 			throw new NoSuchElementException();
 		}
-		
 		return buffer[first];
 	}
 	
 	public String toString() {
 		String temp = "[";
-		for (int i = 0; i<buffer.length; i++) {
-			temp = temp + buffer[i] + ",";
-		}
-		temp = buffer[last] + "]";
 		
+		for (int i = first; i<last-1; i++) {
+			temp = temp + buffer[i] + ", ";
+		}
+		temp += buffer[last-1] + "]";
+	
 		return temp;
 	}
 }
