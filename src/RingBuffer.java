@@ -3,13 +3,11 @@ import java.util.NoSuchElementException;
 public class RingBuffer {
   double[] buffer;
   int size = 0;
-  int first;
-  int last;
+  int first = 0;
+  int last = 0;
 
   public RingBuffer(int capacity) {
     buffer = new double[capacity];
-    first = 0;
-    last = 0;
   }
 
   public int size() {
@@ -28,11 +26,6 @@ public class RingBuffer {
 
     if (isFull()) {
       throw new IllegalStateException();
-    }
-
-    if (isEmpty()) {
-      first = 0;
-      last = 0;
     }
 
     buffer[last] = x;
@@ -60,11 +53,7 @@ public class RingBuffer {
     if (first >= buffer.length) {
       first = 0;
     }
-
-    if (size == 0) {
-      first = 0;
-      last = 0;
-    }
+  
     return temp;
   }
 
@@ -76,37 +65,23 @@ public class RingBuffer {
   }
 
   public String toString() {
-    double inOrder[] = new double[size()];
-    int index=0;
 
-    if (last <= first && !isEmpty()) {
-      for (int i = first; i < buffer.length; i++){
-        inOrder[index] = buffer[i];
-        index++;
-      }
+    String temp ="[";
+    
+   if (isEmpty()) {
+	   return "[]";
+   }
 
-      for (int j = 0; j < last; j++) {
-        inOrder[index] = buffer[j];
-        index++;
-      }
-      
-    } else {
-      index = 0;
-      for (int x = 0; x < last; x++) {
-        inOrder[index] = buffer[x];
-        index++;
-      }
+
+    for (int y = first; y < buffer.length-1; y++) {
+      temp += buffer[y] + ", ";
     }
-
-    String temp = "[";
-
-    if (isEmpty()) {
-      return "[]";
+    
+    
+    for (int i = 0; i<last-1; i++) {
+    	temp+= buffer[i] + ",";
     }
-
-    for (int y = 0; y < inOrder.length; y++) {
-      temp += inOrder[y] + ",";
-    }
+    temp+=buffer[last-1]+"]";
     return temp;
   }
 }
