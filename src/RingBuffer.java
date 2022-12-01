@@ -67,21 +67,32 @@ public class RingBuffer {
   public String toString() {
 
     String temp ="[";
-    
+   
+   //whole array is empty
    if (isEmpty()) {
 	   return "[]";
    }
-
-
+   
+   //wrap around
+   if (last<=first) {
     for (int y = first; y < buffer.length-1; y++) {
       temp += buffer[y] + ", ";
     }
-    
-    
-    for (int i = 0; i<last-1; i++) {
+        for (int i = 0; i<last-1; i++) {
     	temp+= buffer[i] + ",";
     }
     temp+=buffer[last-1]+"]";
+   }
+   
+   //normal case when first is before last
+   //without wrap around
+   else if (last> first && !isFull()){
+	   for (int j = 0; j<last-1; j++) {
+		   temp+= buffer[j]+", ";
+	   }
+	   temp += buffer[last-1] +"]";
+   }
+   
     return temp;
   }
 }
