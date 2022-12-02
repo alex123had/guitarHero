@@ -59,7 +59,7 @@ public class RingBuffer {
 
   public String toString() {
 	 if(isEmpty()) {
-		 return "[";
+		 return "[]";
 	 }
 	 String phrase = "[";
 	 for (int i = 0; i<size()-1;i++) {
