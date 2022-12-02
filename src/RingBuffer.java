@@ -29,11 +29,8 @@ public class RingBuffer {
     }
 
     buffer[last] = x;
-    last++;
-
-    if (last >= buffer.length - 1) {
-      last = 0;
-    }
+    
+    last = (last+1)%buffer.length;
 
     size++;
   }
@@ -42,17 +39,13 @@ public class RingBuffer {
     if (isEmpty()) {
       throw new NoSuchElementException();
     }
-    double tArray[] = new double[buffer.length];
 
     double temp = buffer[first];
-    buffer[first] = tArray[first];
-    first++;
+    buffer[first] = 0.0;
 
     size--;
 
-    if (first >= buffer.length) {
-      first = 0;
-    }
+    first = (first+1)%buffer.length;
   
     return temp;
   }
@@ -65,34 +58,20 @@ public class RingBuffer {
   }
 
   public String toString() {
-
-    String temp ="[";
-   
-   //whole array is empty
-   if (isEmpty()) {
-	   return "[]";
-   }
-   
-   //wrap around
-   if (last<=first) {
-    for (int y = first; y < buffer.length-1; y++) {
-      temp += buffer[y] + ", ";
-    }
-        for (int i = 0; i<last-1; i++) {
-    	temp+= buffer[i] + ",";
-    }
-    temp+=buffer[last-1]+"]";
-   }
-   
-   //normal case when first is before last
-   //without wrap around
-   else if (last> first && !isFull()){
-	   for (int j = 0; j<last-1; j++) {
-		   temp+= buffer[j]+", ";
-	   }
-	   temp += buffer[last-1] +"]";
-   }
-   
-    return temp;
+	 if(isEmpty()) {
+		 return "[";
+	 }
+	 String phrase = "[";
+	 for (int i = 0; i<size()-1;i++) {
+		 phrase += ""  + peek() + ", ";
+		 enqueue(dequeue());
+	 }
+	 
+	 phrase+= peek();
+	 enqueue(dequeue());
+	 
+	 phrase+="]";
+	 
+	 return phrase;
   }
 }
