@@ -3,7 +3,7 @@ public class KeyboardHero {
 	String music = "qqqqqqqq22222";
 	char[] direction = new char[music.length()];
 	for (int j = 0; j<direction.length; j++) {
-		direction[0] = 
+		direction[j] = music.charAt(j);
 	}
 	
 	String keyboard = "q2we4r5ty7u8i9op-[=zxdcfvgbnjmk,.;/' ";

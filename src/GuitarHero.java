@@ -1,42 +1,47 @@
 public class GuitarHero {
-	public static void main(String[] args) {
-	String keyboard = "q2we4r5ty7u8i9op-[=zxdcfvgbnjmk,.;/' ";
-	GuitarString[] notes = new GuitarString [37];
-	
-	for (int i = 0; i<notes.length; i++) {
-		int frequency = (int)(440*Math.pow(1.05960, i-25));
-		notes[i] = new GuitarString(frequency);
-		double TEXT_POS_X = .2;
-        double TEXT_POS_Y = .5;
+
+    public static void main(String[] args) {
+    	
+        String keyboard = "q2we4r5ty7u8i9op-[=zxdcfvgbnjmk,.;/' ";
+        GuitarString[] key = new GuitarString[37];
         
-        StdDraw.text(TEXT_POS_X, TEXT_POS_Y, "Play a note!");
-	}
-	
-	while (true) {
-		if(StdDraw.hasNextKeyTyped()) {
-			char key = StdDraw.nextKeyTyped();
-			
-			int index = keyboard.indexOf(key);
-			
-			if (index!=-1) {
-				notes[index].pluck();
-				StdDraw.text(.2, .6, "You played something");
-			}
-			
-			double sample=0;
-			
-			//haven't figured out what the for loop should go
-			for(int i = 0; i<notes.length; i++) {
-				sample+= notes[i].sample();
-			}
-			
-			StdAudio.play(sample);
-			for (int i = 0; i<notes.length; i++) {
-				notes[i].tic();
-			}
-			
-		}
-	}
-	
-	}
+        //calculate frequency for each keyboard letter/number
+        for (int i = 0; i<key.length; i++) {
+        	int frequency = (int) (440.0* Math.pow(1.05956, i-25));
+        	key[i] = new GuitarString(frequency);
+        }
+        
+                  
+       // the main input loop
+        while(true) {
+            // check if the user has typed a key, and, if so, process it
+            if (StdDraw.hasNextKeyTyped()) {
+ 
+                // the user types this character
+                char k = StdDraw.nextKeyTyped();              
+                int index = keyboard.indexOf(k);
+                // pluck the corresponding string
+                if(index>=0) {
+                	key[index].pluck();
+                    StdDraw.text(0.2, 0.6, "You played something.");
+                	}
+                }
+         
+
+            // compute the superposition of the samples
+            double sample = 0;
+            for (int i = 0; i<key.length; i++) {
+            	sample +=key[i].sample();
+            }
+
+            // send the result to standard audio
+            StdAudio.play(sample);
+            
+            // advance the simulation of each guitar string by one step
+            for (int i = 0; i<key.length; i++) {
+            	key[i].tic();
+            }
+        }
+    }
 }
+

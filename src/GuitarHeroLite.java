@@ -27,7 +27,8 @@ public class GuitarHeroLite {
         play(stringA, stringC);
     }
     
-    private static void play(GuitarString stringA, GuitarString stringC) {        // the main input loop
+    private static void play(GuitarString stringA, GuitarString stringC) { 
+    	// the main input loop
         while (true) {
             
             // check if the user has typed a key, and, if so, process it
