@@ -27,6 +27,7 @@ public class GuitarHeroLite {
         play(stringA, stringC);
     }
     
+    
     private static void play(GuitarString stringA, GuitarString stringC) { 
     	// the main input loop
         while (true) {
