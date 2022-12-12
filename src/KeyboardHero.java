@@ -1,6 +1,6 @@
 public class KeyboardHero{
     public static void main(String[] args) {
-    	String music = "a2";
+    	String music = "o-[zd[ddx-xxzpzzo-[zd[dbvd[dvvvv";
     	char[] notes = new char[music.length()];
     	
     	for (int a = 0; a<notes.length; a++) {
@@ -15,52 +15,63 @@ public class KeyboardHero{
             	key[i] = new GuitarString(frequency);
             }
             
-            for (int x = 0; x<notes.length; x++) {
+           
             	play(notes, keyboard, key);
-            }
+            
         }
         
-        private static void play(char[] note, String str, GuitarString[] keys) {
-        	char[] musicNotes = note;
-        	String keyboard = str;
-        	GuitarString[] kk = keys;
-        	int position = 0;
-        	char targetNote = musicNotes[position];
-        	
-        	StdDraw.text(0.1, 0.9, "Please play " + musicNotes[position]);
-        	
-        	while(true) {
-                // check if the user has typed a key, and, if so, process it
-                if (StdDraw.hasNextKeyTyped()) {
-     
-                    // the user types this character
-                    char userNote = StdDraw.nextKeyTyped();              
-    				int index = keyboard.indexOf(userNote);
-    				
-                    if (userNote == targetNote){
-                    	kk[index].pluck();
+    private static void play(char[] notes, String keyboard, GuitarString[]key) {
+    // the main input loop
+        int position = 0;
+        StdDraw.text(0.5, 0.6, "You are going to play In the Hall of the Mountain King");
+        StdDraw.text(.5, .5, "Please press " + notes[position] +" on your keyboard");
+        while (true) {
+        	char targetNote = notes[position];
+        	if (StdDraw.hasNextKeyTyped()) {
+                // the user types this character
+            	char userNote = StdDraw.nextKeyTyped();
+            	if(position < notes.length-1)
+            	{
+                    if(userNote == targetNote)
+                    {
                     	position++;
                     }
-                    else {
-                    	StdDraw.text(0.2, 0.6, "Wrong key");
-                    }
-             
-                // compute the superposition of the samples
-                double sample = 0;
-                for (int i = 0; i<kk.length; i++) {
-                	sample +=kk[i].sample();
-                }
-
-                // send the result to standard audio
-                StdAudio.play(sample);
+                    
+                    targetNote = notes[position];
+                    StdDraw.clear();
+            		StdDraw.text(.5,.5, "Please press " + targetNote + " on your keyboard");
+            	}
+            	else {
+            		StdDraw.clear();
+            		StdDraw.text(.5, .5, "Finished!");
+            	}
                 
-                // advance the simulation of each guitar string by one step
-                for (int i = 0; i<kk.length; i++) {
-                	kk[i].tic();
+                int index = keyboard.indexOf(userNote);
+                if(index == -1) {
+                	StdDraw.text(0.5,0.3, "That is not a key.");
+                }
+                else {
+                	key[index].pluck();
                 }
             }
-        }
-     }
-        
-    }
 
+            // compute the superposition of the samples
+            // double sample = stringA.sample() + stringC.sample();
+            double sample = 0;
+            for(int x = 0; x < key.length; x++)
+            {
+            	sample = sample + key[x].sample();
+            }
+
+            // send the result to standard audio
+            StdAudio.play(sample);
+            
+            
+            // advance the simulation of each guitar string by one step
+            for(int x = 0; x < key.length; x++)
+            {
+            	key[x].tic();
+            }
+        }
+    }
+}
